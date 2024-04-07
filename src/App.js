@@ -1,6 +1,7 @@
 import "./App.css";
 import { useEffect, useState } from "react";
 import Sort from "./components/Sort";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   const [size, setSize] = useState(0);
@@ -16,7 +17,7 @@ function App() {
             onChange={(e) => {
               setDispElems({
                 ...dispElems,
-                [i]: e.target.value / 1,
+                [i]: e.target.value,
               });
             }}
             className="box"
@@ -26,6 +27,7 @@ function App() {
     }
     return elems;
   }
+  const intElems = Object.values(dispElems).map((x) => parseInt(x));
   return (
     <div className="MainContainer dflex flexcol">
       <div className="flex1 titleArea dflex">Sorting Algorithms</div>
@@ -41,7 +43,7 @@ function App() {
             <div className="entryLabel">Enter elements of array : </div>
             <div className="dflex">{renderElements(size)}</div>
             <div className="array">[{Object.values(dispElems).join(",")}]</div>
-            <Sort currArray = {Object.values(dispElems)} />
+            <Sort currArray={intElems} />
           </>
         ) : (
           <></>
