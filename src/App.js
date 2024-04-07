@@ -1,6 +1,6 @@
 import "./App.css";
 import { useEffect, useState } from "react";
-import Elements from "./components/Elements";
+import Sort from "./components/Sort";
 
 function App() {
   const [size, setSize] = useState(0);
@@ -16,7 +16,7 @@ function App() {
             onChange={(e) => {
               setDispElems({
                 ...dispElems,
-                [i]: e.target.value,
+                [i]: e.target.value / 1,
               });
             }}
             className="box"
@@ -41,6 +41,7 @@ function App() {
             <div className="entryLabel">Enter elements of array : </div>
             <div className="dflex">{renderElements(size)}</div>
             <div className="array">[{Object.values(dispElems).join(",")}]</div>
+            <Sort currArray = {Object.values(dispElems)} />
           </>
         ) : (
           <></>
