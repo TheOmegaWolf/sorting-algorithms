@@ -1,7 +1,19 @@
 .sortButton{
-    width: 50px;
-    height: 50px;
-    font-size: 40% !important;
+    width: 150px;
+    height: 100px;
+    font-size: 25px;
+    margin: 5px;
+    text-align: center !important;
+    padding : 10px 0 !important;
+}
+.array{
+  font-size: 30px;
+  margin-top: 20px;
+}
+.sortButtonBig{
+    width: 150px;
+    height: 100px;
+    font-size: 10px;
     margin: 5px;
     text-align: center !important;
     padding : 10px 0 !important;

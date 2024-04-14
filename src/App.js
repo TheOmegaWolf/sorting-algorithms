@@ -1,7 +1,8 @@
 import "./App.css";
 import { useEffect, useState } from "react";
 import Sort from "./components/Sort";
-import 'bootstrap/dist/css/bootstrap.min.css';
+import "bootstrap/dist/css/bootstrap.min.css";
+import RandomSorting from "./components/RandomSorting";
 
 function App() {
   const [size, setSize] = useState(0);
@@ -38,12 +39,18 @@ function App() {
           className="numBox"
           onChange={(e) => setSize(e.target.value)}
         />
-        {size > 0 ? (
+        {size > 0 && size < 20 ? (
           <>
-            <div className="entryLabel">Enter elements of array : </div>
+            <div className="entryLabel">
+              Enter elements of array Manually (if you want randomized larger samples,
+              enter size > 20) :<></>
+            </div>
             <div className="dflex">{renderElements(size)}</div>
-            <div className="array">[{Object.values(dispElems).join(",")}]</div>
             <Sort currArray={intElems} />
+          </>
+        ) : size >= 20 ? (
+          <>
+            <RandomSorting size={size} />
           </>
         ) : (
           <></>

@@ -1,27 +1,22 @@
 import React, { useState } from "react";
-import Button from "react-bootstrap/Button";
-import style from "./Sort.module.css";
+import style from "./RandomSorting.module.css";
+import { Button } from "react-bootstrap";
 import Charts from "./Charts";
+import { bubbleSort,heapSort,mergeSort, quickSort, selectionSort, quickSortMedianOfThree, insertionSort } from '../utils/sorting';
 import CurrentStats from "./CurrentStats";
-import TimeTaken from "./TimeTaken";
-import { calcTime } from "../utils/sorting";
-import {
-  bubbleSort,
-  heapSort,
-  mergeSort,
-  quickSort,
-  selectionSort,
-  quickSortMedianOfThree,
-  insertionSort,
-} from "../utils/sorting";
-
-const Sort = (props) => {
-  const { currArray } = props;
+const RandomSorting = (props) => {
+  const { size } = props;
+  const [currArray, setCurrArray] = useState([]);
   const [stats, setStats] = useState({});
   const [sortedArray, setSortedArray] = useState([]);
-  const [currStats, setCurrStats] = useState({});
+  const [currStats, setCurrStats] = useState({})
+  function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
+  }
   function setStatistics(currArray) {
-    const [sortedArray, timeTaken, comparisons, movements] =
+    let [sortedArray, timeTaken, comparisons, movements] =
       mergeSort(currArray);
     const [sortedArray2, timeTaken2, comparisons2, movements2] =
       heapSort(currArray);
@@ -73,7 +68,7 @@ const Sort = (props) => {
         spaceComplexity: "O(n)",
       },
       insertionSort: {
-        name: "insertionSort",
+        name : "insertionSort",
         sortedArray: sortedArray5,
         timeTaken: timeTaken5,
         comparisons: comparisons5,
@@ -82,7 +77,7 @@ const Sort = (props) => {
         spaceComplexity: "O(n)",
       },
       selectionSort: {
-        name: "selectionSort",
+        name : "selectionSort",
         sortedArray: sortedArray6,
         timeTaken: timeTaken6,
         comparisons: comparisons6,
@@ -91,7 +86,7 @@ const Sort = (props) => {
         spaceComplexity: "O(n)",
       },
       bubbleSort: {
-        name: "bubbleSort",
+        name : "bubbleSort",
         sortedArray: sortedArray7,
         timeTaken: timeTaken7,
         comparisons: comparisons7,
@@ -103,12 +98,27 @@ const Sort = (props) => {
   }
   return (
     <>
-      <div className={style.array}>
-        {sortedArray.length > 0
-          ? `Sorted Array : [` + sortedArray.join(",") + `]`
-          : `[` + currArray.join(",") + `]`}
-      </div>
-      <div className="dflex">
+      <div
+        className={`${style.entryLabel} ${style.dflex} ${style.flexcol} ${style.cover}`}
+      >
+        <div className={`${style.center} ${style.dflex} ${style.mtb20}`}>
+          <Button
+            onClick={() => {
+              console.log(size);
+              let arr = new Array(size);
+              for (let i = 0; i < size; i++) {
+                arr[i] = getRandomInt(-200, 200);
+              }
+              setCurrArray(arr);
+              setStatistics(arr);
+            }}
+          >
+            Randomize!
+          </Button>
+
+         
+        </div>
+        <div className={`${style.dflex} ${style.center}`}>
         <Button
           variant={"dark"}
           className={style.sortButton}
@@ -243,53 +253,13 @@ const Sort = (props) => {
           Bubble Sort
         </Button>
       </div>
-      {Object.keys(currStats).length > 0 ? (
-        <CurrentStats currStats={currStats} />
-      ) : (
-        <></>
-      )}
-      <Charts stats={stats} />
-      <div className="dflex">
-        <TimeTaken currArray={currArray} func={mergeSort} text={"mergesort"} />
-        <TimeTaken currArray={currArray} func={heapSort} text={"heapsort"} />
-        <TimeTaken currArray={currArray} func={quickSort} text={"quicksort"} />
-        <TimeTaken
-          currArray={currArray}
-          func={quickSortMedianOfThree}
-          text={"quickSortMedianOfThree"}
-        />
-        <TimeTaken
-          currArray={currArray}
-          func={insertionSort}
-          text={"insertionsort"}
-        />
-        <TimeTaken
-          currArray={currArray}
-          func={selectionSort}
-          text={"selectionsort"}
-        />
-        <TimeTaken
-          currArray={currArray}
-          func={bubbleSort}
-          text={"bubblesort"}
-        />
-        <Button
-          onClick={() => {
-            calcTime(mergeSort, currArray);
-            calcTime(heapSort, currArray);
-            calcTime(quickSort, currArray);
-            calcTime(quickSortMedianOfThree, currArray);
-            calcTime(insertionSort, currArray);
-            calcTime(selectionSort, currArray);
-            calcTime(bubbleSort, currArray);
-          }}
-          className={style.sortButton}
-        >
-          All - TimeTaken
-        </Button>
+        <div className={style.newArray}>[{currArray.join(",")}]</div>
+        <div className={`${style.newArray} ${style.bold}`}>Sorted Arr : [{sortedArray.join(",")}]</div>
       </div>
+      <CurrentStats currStats={currStats} />
+      <Charts stats={stats} />
     </>
   );
 };
 
-export default Sort;
+export default RandomSorting;
